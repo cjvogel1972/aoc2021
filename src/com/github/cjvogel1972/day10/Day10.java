@@ -46,14 +46,11 @@ public class Day10 {
         for (String line : data) {
             if (computeIllegalLine(line) == 0) {
                 String completeLine = completeLine(line);
-                System.out.println(completeLine);
                 lineScores.add(computeCompletedLine(completeLine));
             }
         }
 
         Collections.sort(lineScores);
-        System.out.println(lineScores);
-        System.out.println((lineScores.size() / 2));
         int middle = (lineScores.size() / 2);
 
         System.out.println("Middle score = " + lineScores.get(middle));
@@ -138,7 +135,6 @@ public class Day10 {
                     if (chunks.peek() == '(') {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got ')'");
                         incomplete = true;
                     }
                     break;
@@ -146,7 +142,6 @@ public class Day10 {
                     if (chunks.peek() == '[') {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got ']'");
                         incomplete = true;
                     }
                     break;
@@ -154,7 +149,6 @@ public class Day10 {
                     if (chunks.peek() == '{') {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got '}'");
                         incomplete = true;
                     }
                     break;
@@ -162,7 +156,6 @@ public class Day10 {
                     if (chunks.peek() == '<') {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got '>'");
                         incomplete = true;
                     }
                     break;
