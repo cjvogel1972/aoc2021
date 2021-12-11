@@ -21,7 +21,7 @@ public class Octopus {
         }
     }
 
-    public void checkIfFlash() {
+    private void checkIfFlash() {
         if (!flashed && energy > 9) {
             flashed = true;
             for (Octopus neighbor : neighbors) {

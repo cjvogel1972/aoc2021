@@ -22,11 +22,7 @@ public class Day11 {
         int flashes = 0;
 
         for (int step = 0; step < 100; step++) {
-            for (List<Octopus> row : data) {
-                for (Octopus octopus : row) {
-                    octopus.incrementEnergy();
-                }
-            }
+            incrementAllOctopi(data);
 
             flashes += countAndResetFlashes(data);
         }
@@ -42,11 +38,7 @@ public class Day11 {
         int step = 0;
         while (!synched) {
             step++;
-            for (List<Octopus> row : data) {
-                for (Octopus octopus : row) {
-                    octopus.incrementEnergy();
-                }
-            }
+            incrementAllOctopi(data);
 
             int flashes = countAndResetFlashes(data);
 
@@ -56,6 +48,14 @@ public class Day11 {
         }
 
         System.out.println("Octopi synched on step " + step);
+    }
+
+    private static void incrementAllOctopi(List<List<Octopus>> data) {
+        for (List<Octopus> row : data) {
+            for (Octopus octopus : row) {
+                octopus.incrementEnergy();
+            }
+        }
     }
 
     private static int countAndResetFlashes(List<List<Octopus>> data) {
