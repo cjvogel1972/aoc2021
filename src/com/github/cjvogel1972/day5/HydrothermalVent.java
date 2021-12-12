@@ -21,47 +21,21 @@ public class HydrothermalVent {
     }
 
     public List<Coordinate> getVentCoordinates() {
-        List<Coordinate> result = new ArrayList<>();
-        if (isHorizontal()) {
-            result = computeHorizontalCoordinates();
-        } else if (isVertical()) {
-            result = computeVerticalCoordinates();
-        } else {
-            result = computeDiagonalCoordinates();
-        }
-
-        return result;
+        return computeCoordinates();
     }
 
-    private List<Coordinate> computeHorizontalCoordinates() {
+    private List<Coordinate> computeCoordinates() {
         List<Coordinate> result = new ArrayList<>();
 
-        int y = coord1.getY();
-        int xDelta = coord1.getX() < coord2.getX() ? 1 : -1;
-        for (int x = coord1.getX(); x <= coord2.getX(); x = x + xDelta) {
-            result.add(new Coordinate(x, y));
+        int xDelta = coord2.getX() - coord1.getX();
+        if (xDelta != 0) {
+            xDelta = xDelta / Math.abs(xDelta);
+        }
+        int yDelta = coord2.getY() - coord1.getY();
+        if (yDelta != 0) {
+            yDelta = yDelta / Math.abs(yDelta);
         }
 
-        return result;
-    }
-
-    private List<Coordinate> computeVerticalCoordinates() {
-        List<Coordinate> result = new ArrayList<>();
-
-        int x = coord1.getX();
-        int yDelta = coord1.getY() < coord2.getY() ? 1 : -1;
-        for (int y = coord1.getY(); y <= coord2.getY(); y = y + yDelta) {
-            result.add(new Coordinate(x, y));
-        }
-
-        return result;
-    }
-
-    private List<Coordinate> computeDiagonalCoordinates() {
-        List<Coordinate> result = new ArrayList<>();
-
-        int xDelta = coord1.getX() < coord2.getX() ? 1 : -1;
-        int yDelta = coord1.getY() < coord2.getY() ? 1 : -1;
         result.add(coord1);
         Coordinate prevCoord = coord1;
         do {
