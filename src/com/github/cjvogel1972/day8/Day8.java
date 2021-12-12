@@ -1,12 +1,12 @@
 package com.github.cjvogel1972.day8;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.github.cjvogel1972.util.Utilities.readFileLines;
 
 public class Day8 {
 
@@ -16,7 +16,7 @@ public class Day8 {
     }
 
     private static void part1() throws IOException {
-        var data = readFile("input-files/day8.txt");
+        var data = readFileLines("input-files/day8.txt");
 
         var sum = data.stream()
                 .map(line -> countOneFourSevenEights(splitWiringConfigFromNumbers(line)[1]))
@@ -26,7 +26,7 @@ public class Day8 {
     }
 
     private static void part2() throws IOException {
-        var data = readFile("input-files/day8.txt");
+        var data = readFileLines("input-files/day8.txt");
 
         var sum = data.stream()
                 .map(Day8::computeDisplayNumber)
@@ -205,15 +205,5 @@ public class Day8 {
 
     private static String[] splitWiringConfigFromNumbers(String line) {
         return line.split("\\|");
-    }
-
-    private static List<String> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var result = lines.toList();
-        lines.close();
-
-        return result;
     }
 }

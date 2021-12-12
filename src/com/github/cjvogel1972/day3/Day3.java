@@ -1,9 +1,13 @@
 package com.github.cjvogel1972.day3;
 
+import com.github.cjvogel1972.day2.SubCommand;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+
+import static com.github.cjvogel1972.util.Utilities.parseFile;
 
 public class Day3 {
 
@@ -16,14 +20,7 @@ public class Day3 {
     }
 
     private static List<DiagnosticEntry> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var result = lines.map(DiagnosticEntry::new)
-                .toList();
-        lines.close();
-
-        return result;
+        return parseFile(fileName, DiagnosticEntry::new);
     }
 
     private static void part1(Diagnostics diagnostics) {

@@ -1,9 +1,10 @@
 package com.github.cjvogel1972.day11;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
+
+import static com.github.cjvogel1972.util.Utilities.charToInt;
+import static com.github.cjvogel1972.util.Utilities.parseFile;
 
 public class Day11 {
 
@@ -71,19 +72,12 @@ public class Day11 {
     }
 
     private static List<List<Octopus>> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var result = lines.map(Day11::parseLine)
-                .toList();
-        lines.close();
-
-        return result;
+        return parseFile(fileName, Day11::parseLine);
     }
 
     private static List<Octopus> parseLine(String line) {
         return line.chars()
-                .mapToObj(c -> new Octopus(Integer.parseInt(String.valueOf((char) c))))
+                .mapToObj(c -> new Octopus(charToInt((char) c)))
                 .toList();
 
     }

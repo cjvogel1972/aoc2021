@@ -1,30 +1,20 @@
 package com.github.cjvogel1972.day10;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.github.cjvogel1972.util.Utilities.readFileLines;
+
 public class Day10 {
 
     public static void main(String[] args) throws IOException {
-        var data = readFile("input-files/day10.txt");
+        var data = readFileLines("input-files/day10.txt");
 
         part1(data);
         part2(data);
-    }
-
-    private static List<String> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var result = lines.toList();
-        lines.close();
-
-        return result;
     }
 
     private static void part1(List<String> data) {
