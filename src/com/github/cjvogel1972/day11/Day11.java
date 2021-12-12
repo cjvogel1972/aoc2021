@@ -2,11 +2,8 @@ package com.github.cjvogel1972.day11;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Day11 {
 
@@ -16,12 +13,12 @@ public class Day11 {
     }
 
     private static void part1() throws IOException {
-        List<List<Octopus>> data = readFile("input-files/day11.txt");
+        var data = readFile("input-files/day11.txt");
         initNeighbors(data);
 
-        int flashes = 0;
+        var flashes = 0;
 
-        for (int step = 0; step < 100; step++) {
+        for (var step = 0; step < 100; step++) {
             incrementAllOctopi(data);
 
             flashes += countAndResetFlashes(data);
@@ -31,16 +28,16 @@ public class Day11 {
     }
 
     private static void part2() throws IOException {
-        List<List<Octopus>> data = readFile("input-files/day11.txt");
+        var data = readFile("input-files/day11.txt");
         initNeighbors(data);
 
-        boolean synched = false;
-        int step = 0;
+        var synched = false;
+        var step = 0;
         while (!synched) {
             step++;
             incrementAllOctopi(data);
 
-            int flashes = countAndResetFlashes(data);
+            var flashes = countAndResetFlashes(data);
 
             if (flashes == 100) {
                 synched = true;
@@ -51,18 +48,18 @@ public class Day11 {
     }
 
     private static void incrementAllOctopi(List<List<Octopus>> data) {
-        for (List<Octopus> row : data) {
-            for (Octopus octopus : row) {
+        for (var row : data) {
+            for (var octopus : row) {
                 octopus.incrementEnergy();
             }
         }
     }
 
     private static int countAndResetFlashes(List<List<Octopus>> data) {
-        int flashes = 0;
+        var flashes = 0;
 
-        for (List<Octopus> row : data) {
-            for (Octopus octopus : row) {
+        for (var row : data) {
+            for (var octopus : row) {
                 if (octopus.flashedThisStep()) {
                     flashes++;
                     octopus.resetFlash();
@@ -74,11 +71,11 @@ public class Day11 {
     }
 
     private static List<List<Octopus>> readFile(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
+        var path = Paths.get(fileName);
 
-        Stream<String> lines = Files.lines(path);
-        List<List<Octopus>> result = lines.map(Day11::parseLine)
-                .collect(Collectors.toList());
+        var lines = Files.lines(path);
+        var result = lines.map(Day11::parseLine)
+                .toList();
         lines.close();
 
         return result;
@@ -87,14 +84,16 @@ public class Day11 {
     private static List<Octopus> parseLine(String line) {
         return line.chars()
                 .mapToObj(c -> new Octopus(Integer.parseInt(String.valueOf((char) c))))
-                .collect(Collectors.toList());
+                .toList();
 
     }
 
     private static void initNeighbors(List<List<Octopus>> data) {
-        for (int i = 0; i < data.size(); i++) {
-            for (int j = 0; j < data.get(i).size(); j++) {
-                Octopus octopus = data.get(i).get(j);
+        for (var i = 0; i < data.size(); i++) {
+            for (var j = 0; j < data.get(i)
+                    .size(); j++) {
+                var octopus = data.get(i)
+                        .get(j);
                 if (i > 0) {
                     addNeighborsFromRow(octopus, data.get(i - 1), j);
                 }

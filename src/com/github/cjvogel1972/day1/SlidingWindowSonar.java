@@ -11,7 +11,7 @@ public class SlidingWindowSonar extends Sonar {
     }
 
     private List<Integer> calculateSlidingWindow(List<Integer> depths) {
-        List<Integer> slidingWindow = new ArrayList<>();
+        var slidingWindow = new ArrayList<Integer>();
 
         for (int i = 2; i < depths.size(); i++) {
             slidingWindow.add(depths.get(i - 2) + depths.get(i - 1) + depths.get(i));

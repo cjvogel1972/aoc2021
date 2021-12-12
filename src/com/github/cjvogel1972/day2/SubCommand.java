@@ -5,7 +5,7 @@ public class SubCommand {
     private final int units;
 
     public SubCommand(String command) {
-        String[] s = command.split(" ");
+        var s = command.split(" ");
 
         this.direction = s[0];
         this.units = Integer.parseInt(s[1]);

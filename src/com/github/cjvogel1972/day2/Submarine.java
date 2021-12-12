@@ -13,14 +13,10 @@ public class Submarine {
     }
 
     public void move(SubCommand command) {
-        if (command.getDirection().equals("forward")) {
-            horizontalPosition += command.getUnits();
-        }
-        else if (command.getDirection().equals("down")) {
-            depth += command.getUnits();
-        }
-        else if (command.getDirection().equals("up")) {
-            depth -= command.getUnits();
+        switch (command.getDirection()) {
+            case "forward" -> horizontalPosition += command.getUnits();
+            case "down" -> depth += command.getUnits();
+            case "up" -> depth -= command.getUnits();
         }
     }
 

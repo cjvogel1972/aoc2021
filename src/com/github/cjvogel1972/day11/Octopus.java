@@ -24,7 +24,7 @@ public class Octopus {
     private void checkIfFlash() {
         if (!flashed && energy > 9) {
             flashed = true;
-            for (Octopus neighbor : neighbors) {
+            for (var neighbor : neighbors) {
                 neighbor.incrementEnergy();
             }
         }
