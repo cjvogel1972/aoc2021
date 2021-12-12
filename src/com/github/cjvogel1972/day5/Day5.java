@@ -1,5 +1,7 @@
 package com.github.cjvogel1972.day5;
 
+import com.github.cjvogel1972.day2.SubCommand;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -7,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
+
+import static com.github.cjvogel1972.util.Utilities.parseFile;
 
 public class Day5 {
 
@@ -18,14 +22,7 @@ public class Day5 {
     }
 
     private static List<HydrothermalVent> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var result = lines.map(Day5::parseLine)
-                .toList();
-        lines.close();
-
-        return result;
+        return parseFile(fileName, Day5::parseLine);
     }
 
     private static HydrothermalVent parseLine(String line) {

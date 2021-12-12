@@ -1,11 +1,12 @@
 package com.github.cjvogel1972.day9;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.github.cjvogel1972.util.Utilities.charToInt;
+import static com.github.cjvogel1972.util.Utilities.parseFile;
 
 public class Day9 {
 
@@ -17,19 +18,12 @@ public class Day9 {
     }
 
     private static List<List<Integer>> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var result = lines.map(Day9::parseLine)
-                .toList();
-        lines.close();
-
-        return result;
+        return parseFile(fileName, Day9::parseLine);
     }
 
     private static List<Integer> parseLine(String line) {
         return line.chars()
-                .mapToObj(c -> Integer.parseInt(String.valueOf((char) c)))
+                .mapToObj(c -> charToInt((char) c))
                 .toList();
     }
 
@@ -88,7 +82,7 @@ public class Day9 {
             for (var j = 0; j < data.get(i)
                     .size(); j++) {
                 if (Boolean.FALSE.equals(covered.get(i)
-                        .get(j))) {
+                                                 .get(j))) {
                     var size = findSizeOfBasin(data, covered, i, j);
                     if (size != 0) {
                         basins.add(size);
@@ -110,7 +104,7 @@ public class Day9 {
         var size = 0;
 
         if (Boolean.FALSE.equals(covered.get(x)
-                .get(y))) {
+                                         .get(y))) {
             covered.get(x)
                     .set(y, true);
             if (data.get(x)

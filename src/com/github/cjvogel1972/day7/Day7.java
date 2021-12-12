@@ -1,12 +1,12 @@
 package com.github.cjvogel1972.day7;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
+
+import static com.github.cjvogel1972.util.Utilities.readFileLines;
 
 public class Day7 {
 
@@ -92,11 +92,7 @@ public class Day7 {
     }
 
     private static List<Integer> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var result = lines.toList();
-        lines.close();
+        var result = readFileLines(fileName);
 
         var nums = result.get(0)
                 .split(",");

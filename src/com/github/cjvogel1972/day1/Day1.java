@@ -1,9 +1,9 @@
 package com.github.cjvogel1972.day1;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
+
+import static com.github.cjvogel1972.util.Utilities.parseFile;
 
 public class Day1 {
 
@@ -15,15 +15,7 @@ public class Day1 {
     }
 
     private static List<Integer> readFile(String fileName) throws IOException {
-        var path = Paths.get(fileName);
-
-        var lines = Files.lines(path);
-        var depths = lines
-                .map(Integer::parseInt)
-                .toList();
-        lines.close();
-
-        return depths;
+        return parseFile(fileName, Integer::parseInt);
     }
 
     private static void part2(List<Integer> depths) {
