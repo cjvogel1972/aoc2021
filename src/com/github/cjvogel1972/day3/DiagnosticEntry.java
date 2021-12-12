@@ -1,11 +1,6 @@
 package com.github.cjvogel1972.day3;
 
-public class DiagnosticEntry {
-    private final String binaryValue;
-
-    public DiagnosticEntry(String binaryValue) {
-        this.binaryValue = binaryValue;
-    }
+public record DiagnosticEntry(String binaryValue) {
 
     public int getNumberOfBits() {
         return binaryValue.length();
@@ -13,10 +8,6 @@ public class DiagnosticEntry {
 
     public int bit(int bitIndex) {
         return binaryValue.charAt(bitIndex) - '0';
-    }
-
-    public String getBinaryValue() {
-        return binaryValue;
     }
 
     public int getIntegerValue() {

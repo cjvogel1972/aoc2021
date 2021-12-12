@@ -1,7 +1,6 @@
 package com.github.cjvogel1972.day8;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Wiring {
     private final String litWires;
@@ -34,8 +33,8 @@ public class Wiring {
     }
 
     public boolean isEqual(String litWires) {
-        List<Character> current = sortWires(this.litWires);
-        List<Character> lit = sortWires(litWires);
+        var current = sortWires(this.litWires);
+        var lit = sortWires(litWires);
 
         return current.equals(lit);
     }
@@ -48,7 +47,7 @@ public class Wiring {
         return config.chars()
                 .mapToObj(c -> (char) c)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

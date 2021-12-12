@@ -13,8 +13,8 @@ public class Sonar {
     }
 
     public int calculateNumberOfIncrements() {
-        int numberOfIncrements = 0;
-        for (int i = 1; i < depths.size(); i++) {
+        var numberOfIncrements = 0;
+        for (var i = 1; i < depths.size(); i++) {
             if (depths.get(i) > depths.get(i - 1)) {
                 numberOfIncrements++;
             }

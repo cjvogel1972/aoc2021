@@ -2,38 +2,35 @@ package com.github.cjvogel1972.day10;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Day10 {
 
     public static void main(String[] args) throws IOException {
-        List<String> data = readFile("input-files/day10.txt");
+        var data = readFile("input-files/day10.txt");
 
         part1(data);
         part2(data);
     }
 
     private static List<String> readFile(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
+        var path = Paths.get(fileName);
 
-        Stream<String> lines = Files.lines(path);
-        List<String> result = lines.collect(Collectors.toList());
+        var lines = Files.lines(path);
+        var result = lines.toList();
         lines.close();
 
         return result;
     }
 
     private static void part1(List<String> data) {
-        int score = 0;
+        var score = 0;
 
-        for (String line : data) {
+        for (var line : data) {
             score += computeIllegalLine(line);
         }
 
@@ -41,72 +38,67 @@ public class Day10 {
     }
 
     private static void part2(List<String> data) {
-        List<Long> lineScores = new ArrayList<>();
+        var lineScores = new ArrayList<Long>();
 
-        for (String line : data) {
+        for (var line : data) {
             if (computeIllegalLine(line) == 0) {
-                String completeLine = completeLine(line);
+                var completeLine = completeLine(line);
                 lineScores.add(computeCompletedLine(completeLine));
             }
         }
 
         Collections.sort(lineScores);
-        int middle = (lineScores.size() / 2);
+        var middle = (lineScores.size() / 2);
 
         System.out.println("Middle score = " + lineScores.get(middle));
     }
 
     private static int computeIllegalLine(String line) {
-        int score = 0;
+        var score = 0;
 
-        char[] chars = line.toCharArray();
-        Stack<Character> chunks = new Stack<>();
+        var chars = line.toCharArray();
+        var chunks = new ArrayDeque<Character>();
 
-        for (int i = 0; i < chars.length; i++) {
-            boolean illegal = false;
-            switch (chars[i]) {
-                case '(':
-                case '[':
-                case '{':
-                case '<':
-                    chunks.push(chars[i]);
+        for (var aChar : chars) {
+            var illegal = false;
+            switch (aChar) {
+                case '(', '[', '{', '<':
+                    chunks.push(aChar);
                     break;
                 case ')':
-                    if (chunks.peek() == '(') {
+                    if (topOfStackEquals(chunks, '(')) {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got ')'");
                         illegal = true;
                         score = 3;
                     }
                     break;
                 case ']':
-                    if (chunks.peek() == '[') {
+                    if (topOfStackEquals(chunks, '[')) {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got ']'");
                         illegal = true;
                         score = 57;
                     }
                     break;
                 case '}':
-                    if (chunks.peek() == '{') {
+                    if (topOfStackEquals(chunks, '{')) {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got '}'");
                         illegal = true;
                         score = 1197;
                     }
                     break;
                 case '>':
-                    if (chunks.peek() == '<') {
+                    if (topOfStackEquals(chunks, '<')) {
                         chunks.pop();
                     } else {
-//                        System.out.println("Expected '" + chunks.peek() + "' but got '>'");
                         illegal = true;
                         score = 25137;
                     }
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + aChar);
             }
 
             if (illegal) {
@@ -118,47 +110,46 @@ public class Day10 {
     }
 
     private static String completeLine(String line) {
-        char[] chars = line.toCharArray();
-        Stack<Character> chunks = new Stack<>();
+        var chars = line.toCharArray();
+        var chunks = new ArrayDeque<Character>();
 
-        for (int i = 0; i < chars.length; i++) {
-            boolean incomplete = false;
+        for (var aChar : chars) {
+            var incomplete = false;
 
-            switch (chars[i]) {
-                case '(':
-                case '[':
-                case '{':
-                case '<':
-                    chunks.push(chars[i]);
+            switch (aChar) {
+                case '(', '[', '{', '<':
+                    chunks.push(aChar);
                     break;
                 case ')':
-                    if (chunks.peek() == '(') {
+                    if (topOfStackEquals(chunks, '(')) {
                         chunks.pop();
                     } else {
                         incomplete = true;
                     }
                     break;
                 case ']':
-                    if (chunks.peek() == '[') {
+                    if (topOfStackEquals(chunks, '[')) {
                         chunks.pop();
                     } else {
                         incomplete = true;
                     }
                     break;
                 case '}':
-                    if (chunks.peek() == '{') {
+                    if (topOfStackEquals(chunks, '{')) {
                         chunks.pop();
                     } else {
                         incomplete = true;
                     }
                     break;
                 case '>':
-                    if (chunks.peek() == '<') {
+                    if (topOfStackEquals(chunks, '<')) {
                         chunks.pop();
                     } else {
                         incomplete = true;
                     }
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + aChar);
             }
 
             if (incomplete) {
@@ -166,48 +157,38 @@ public class Day10 {
             }
         }
 
-        StringBuilder result = new StringBuilder();
+        var result = new StringBuilder();
         while (!chunks.isEmpty()) {
-            char open = chunks.pop();
+            var open = chunks.pop();
             switch (open) {
-                case '(':
-                    result.append(')');
-                    break;
-                case '[':
-                    result.append(']');
-                    break;
-                case '{':
-                    result.append('}');
-                    break;
-                case '<':
-                    result.append('>');
-                    break;
+                case '(' -> result.append(')');
+                case '[' -> result.append(']');
+                case '{' -> result.append('}');
+                case '<' -> result.append('>');
+                default -> throw new IllegalStateException("Unexpected value: " + open);
             }
         }
 
         return result.toString();
     }
 
-    private static long computeCompletedLine(String completedLine) {
-        long score = 0L;
+    private static boolean topOfStackEquals(ArrayDeque<Character> chunks, char aChar) {
+        return !chunks.isEmpty() && chunks.peek() == aChar;
+    }
 
-        char[] chars = completedLine.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
+    private static long computeCompletedLine(String completedLine) {
+        var score = 0L;
+
+        var chars = completedLine.toCharArray();
+        for (var aChar : chars) {
             score *= 5;
-            switch (chars[i]) {
-                case ')':
-                    score += 1;
-                    break;
-                case ']':
-                    score += 2;
-                    break;
-                case '}':
-                    score += 3;
-                    break;
-                case '>':
-                    score += 4;
-                    break;
-            }
+            score += switch (aChar) {
+                case ')' -> 1;
+                case ']' -> 2;
+                case '}' -> 3;
+                case '>' -> 4;
+                default -> throw new IllegalStateException("Unexpected value: " + aChar);
+            };
         }
 
         return score;

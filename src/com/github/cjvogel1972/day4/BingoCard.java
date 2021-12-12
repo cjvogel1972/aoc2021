@@ -3,15 +3,15 @@ package com.github.cjvogel1972.day4;
 import java.util.Arrays;
 
 public class BingoCard {
-    private int[][] squares;
+    private final int[][] squares;
 
     public BingoCard(int[][] squares) {
         this.squares = squares;
     }
 
     public void checkNumber(int number) {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
                 if (squares[i][j] == number) {
                     squares[i][j] = -1;
                 }
@@ -20,9 +20,9 @@ public class BingoCard {
     }
 
     public boolean isWinner() {
-        boolean win = false;
+        var win = false;
 
-        for (int i = 0; i < 5; i++) {
+        for (var i = 0; i < 5; i++) {
             win |= checkRowForWin(i);
             win |= checkColumnForWin(i);
         }
@@ -31,9 +31,9 @@ public class BingoCard {
     }
 
     private boolean checkRowForWin(int row) {
-        boolean win = true;
+        var win = true;
 
-        for (int i = 0; i < 5; i++) {
+        for (var i = 0; i < 5; i++) {
             win &= (squares[row][i] == -1);
         }
 
@@ -41,9 +41,9 @@ public class BingoCard {
     }
 
     private boolean checkColumnForWin(int column) {
-        boolean win = true;
+        var win = true;
 
-        for (int i = 0; i < 5; i++) {
+        for (var i = 0; i < 5; i++) {
             win &= (squares[i][column] == -1);
         }
 
@@ -53,8 +53,8 @@ public class BingoCard {
     public int computeScore() {
         int score = 0;
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
                 if (squares[i][j] != -1) {
                     score += squares[i][j];
                 }

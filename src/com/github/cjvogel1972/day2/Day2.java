@@ -2,36 +2,39 @@ package com.github.cjvogel1972.day2;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Day2 {
 
     public static void main(String[] args) throws IOException {
-        List<SubCommand> commands = readSubCommandsFile("input-files/day2.txt");
+        var commands = readFile("input-files/day2.txt");
 
-        System.out.println("Simple Sub:");
-        moveSubmarine(new Submarine(), commands);
-
+        part1(commands);
         System.out.println();
-
-        System.out.println("Complicated Sub:");
-        moveSubmarine(new ComplicatedSubmarine(), commands);
+        part2(commands);
     }
 
-    private static List<SubCommand> readSubCommandsFile(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
+    private static List<SubCommand> readFile(String fileName) throws IOException {
+        var path = Paths.get(fileName);
 
-        Stream<String> lines = Files.lines(path);
-        List<SubCommand> commands = lines
+        var lines = Files.lines(path);
+        var commands = lines
                 .map(SubCommand::new)
-                .collect(Collectors.toList());
+                .toList();
         lines.close();
 
         return commands;
+    }
+
+    private static void part1(List<SubCommand> commands) {
+        System.out.println("Simple Sub:");
+        moveSubmarine(new Submarine(), commands);
+    }
+
+    private static void part2(List<SubCommand> commands) {
+        System.out.println("Complicated Sub:");
+        moveSubmarine(new ComplicatedSubmarine(), commands);
     }
 
     private static void moveSubmarine(Submarine sub, List<SubCommand> commands) {
