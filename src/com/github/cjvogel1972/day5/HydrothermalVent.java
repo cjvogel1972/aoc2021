@@ -1,5 +1,7 @@
 package com.github.cjvogel1972.day5;
 
+import com.github.cjvogel1972.util.Coordinate;
+
 import java.util.ArrayList;
 import java.util.List;
 

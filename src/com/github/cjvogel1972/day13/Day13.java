@@ -1,5 +1,7 @@
 package com.github.cjvogel1972.day13;
 
+import com.github.cjvogel1972.util.Coordinate;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
