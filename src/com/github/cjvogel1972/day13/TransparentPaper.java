@@ -3,52 +3,55 @@ package com.github.cjvogel1972.day13;
 import com.github.cjvogel1972.util.Coordinate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TransparentPaper {
-    private List<List<Boolean>> dots;
+    private final List<List<Boolean>> dots;
 
     public TransparentPaper(List<Coordinate> coordinates) {
-        int maxX = coordinates.stream().mapToInt(coordinate -> coordinate.x()).max().getAsInt();
-        int maxY = coordinates.stream().mapToInt(coordinate -> coordinate.y()).max().getAsInt();
+        int maxX = coordinates.stream()
+                .mapToInt(Coordinate::x)
+                .max()
+                .getAsInt();
+        int maxY = coordinates.stream()
+                .mapToInt(Coordinate::y)
+                .max()
+                .getAsInt();
 
         dots = new ArrayList<>();
         for (var i = 0; i <= maxY; i++) {
-            var row = new ArrayList<Boolean>();
-            for (var j = 0; j <= maxX; j++) {
-                row.add(false);
-            }
-            dots.add(row);
+            dots.add(new ArrayList<>(Collections.nCopies((maxX + 1), false)));
         }
 
         for (Coordinate coordinate : coordinates) {
-            dots.get(coordinate.y()).set(coordinate.x(), true);
+            dots.get(coordinate.y())
+                    .set(coordinate.x(), true);
         }
     }
 
     public void fold(FoldCommand command) {
-        if (command.direction().equals("y")) {
+        if (command.direction()
+                .equals("y")) {
             foldY(command.line());
-        }
-        else {
+        } else {
             foldX(command.line());
         }
     }
 
     private void foldX(int line) {
-        for (var i = 1; i < (dots.get(0).size() - line); i++) {
-            for (List<Boolean> row : dots) {
+        for (List<Boolean> row : dots) {
+            for (var i = 1; i < (row.size() - line); i++) {
                 boolean left = row.get(line - i);
                 boolean right = row.get(line + i);
-                row.set(line - i, (left | right));
+                row.set((line - i), (left || right));
             }
         }
 
-        for (var i = (dots.get(0).size() - 1); i > (line - 1); i--) {
-            for (List<Boolean> row : dots) {
-                row.remove(i);
-            }
+        for (List<Boolean> row : dots) {
+            row.subList(line, row.size())
+                    .clear();
         }
     }
 
@@ -57,12 +60,13 @@ public class TransparentPaper {
             List<Boolean> lowerRow = dots.get(line + i);
             List<Boolean> upperRow = dots.get(line - i);
             for (var j = 0; j < lowerRow.size(); j++) {
-                upperRow.set(j, lowerRow.get(j) | upperRow.get(j));
+                upperRow.set(j, (lowerRow.get(j) || upperRow.get(j)));
             }
         }
 
-        for (var i = (dots.size() - 1); i > (line - 1); i--) {
-            dots.remove(i);
+        if (dots.size() > line) {
+            dots.subList(line, dots.size())
+                    .clear();
         }
     }
 
@@ -70,7 +74,9 @@ public class TransparentPaper {
         int sum = 0;
 
         for (List<Boolean> row : dots) {
-            sum += row.stream().filter(Boolean.TRUE::equals).count();
+            sum += row.stream()
+                    .filter(Boolean.TRUE::equals)
+                    .count();
         }
 
         return sum;
@@ -80,9 +86,10 @@ public class TransparentPaper {
     public String toString() {
         var result = new StringBuilder();
         for (List<Boolean> row : dots) {
-            String rowValue = row.stream().map(value -> value ? "#" : ".").collect(Collectors.joining());
+            String rowValue = row.stream()
+                    .map(value -> Boolean.TRUE.equals(value) ? "#" : ".")
+                    .collect(Collectors.joining("", "", "\n"));
             result.append(rowValue);
-            result.append("\n");
         }
 
         return result.toString();
