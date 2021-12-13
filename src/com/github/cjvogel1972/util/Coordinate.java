@@ -1,4 +1,4 @@
-package com.github.cjvogel1972.day13;
+package com.github.cjvogel1972.util;
 
 import java.util.Objects;
 
