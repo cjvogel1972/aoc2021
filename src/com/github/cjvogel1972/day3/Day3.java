@@ -1,10 +1,6 @@
 package com.github.cjvogel1972.day3;
 
-import com.github.cjvogel1972.day2.SubCommand;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static com.github.cjvogel1972.util.Utilities.parseFile;

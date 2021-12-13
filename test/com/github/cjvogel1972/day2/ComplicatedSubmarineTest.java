@@ -1,7 +1,5 @@
 package com.github.cjvogel1972.day2;
 
-import com.github.cjvogel1972.day2.SubCommand;
-import com.github.cjvogel1972.day2.Submarine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
