@@ -15,21 +15,21 @@ public class HydrothermalVent {
     }
 
     public boolean isHorizontal() {
-        return (coord1.getY() == coord2.getY());
+        return (coord1.y() == coord2.y());
     }
 
     public boolean isVertical() {
-        return (coord1.getX() == coord2.getX());
+        return (coord1.x() == coord2.x());
     }
 
     public List<Coordinate> getVentCoordinates() {
         var result = new ArrayList<Coordinate>();
 
-        var xDelta = coord2.getX() - coord1.getX();
+        var xDelta = coord2.x() - coord1.x();
         if (xDelta != 0) {
             xDelta = xDelta / Math.abs(xDelta);
         }
-        var yDelta = coord2.getY() - coord1.getY();
+        var yDelta = coord2.y() - coord1.y();
         if (yDelta != 0) {
             yDelta = yDelta / Math.abs(yDelta);
         }
@@ -37,7 +37,7 @@ public class HydrothermalVent {
         result.add(coord1);
         var prevCoord = coord1;
         do {
-            var newCoord = new Coordinate(prevCoord.getX() + xDelta, prevCoord.getY() + yDelta);
+            var newCoord = new Coordinate(prevCoord.x() + xDelta, prevCoord.y() + yDelta);
             result.add(newCoord);
             prevCoord = newCoord;
         } while (!prevCoord.equals(coord2));

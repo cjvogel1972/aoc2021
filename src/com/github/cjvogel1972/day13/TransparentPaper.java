@@ -10,8 +10,8 @@ public class TransparentPaper {
     private List<List<Boolean>> dots;
 
     public TransparentPaper(List<Coordinate> coordinates) {
-        int maxX = coordinates.stream().mapToInt(coordinate -> coordinate.getX()).max().getAsInt();
-        int maxY = coordinates.stream().mapToInt(coordinate -> coordinate.getY()).max().getAsInt();
+        int maxX = coordinates.stream().mapToInt(coordinate -> coordinate.x()).max().getAsInt();
+        int maxY = coordinates.stream().mapToInt(coordinate -> coordinate.y()).max().getAsInt();
 
         dots = new ArrayList<>();
         for (var i = 0; i <= maxY; i++) {
@@ -23,7 +23,7 @@ public class TransparentPaper {
         }
 
         for (Coordinate coordinate : coordinates) {
-            dots.get(coordinate.getY()).set(coordinate.getX(), true);
+            dots.get(coordinate.y()).set(coordinate.x(), true);
         }
     }
 
@@ -62,7 +62,6 @@ public class TransparentPaper {
         }
 
         for (var i = (dots.size() - 1); i > (line - 1); i--) {
-//            System.out.println(i);
             dots.remove(i);
         }
     }
