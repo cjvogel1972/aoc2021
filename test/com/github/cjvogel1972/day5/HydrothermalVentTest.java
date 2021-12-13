@@ -1,11 +1,10 @@
 package com.github.cjvogel1972.day5;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.github.cjvogel1972.util.Coordinate;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HydrothermalVentTest {
 
@@ -13,7 +12,7 @@ class HydrothermalVentTest {
 
     @Test
     void isHorizontal_HorizontalVent() {
-        vent = new HydrothermalVent(new Coordinate(0,9), new Coordinate(5, 9));
+        vent = new HydrothermalVent(new Coordinate(0, 9), new Coordinate(5, 9));
         assertTrue(vent.isHorizontal());
     }
 
