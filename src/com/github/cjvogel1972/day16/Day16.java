@@ -34,20 +34,14 @@ public class Day16 {
 
     public static void main(String[] args) throws IOException {
         List<String> data = readFileLines("input-files/day16.txt");
-        String bits = computeBits(data.get(0));
+        String packetStr = data.get(0);
 //        String bits = computeBits("9C0141080250320F1802104A08");
-        part1(bits);
-        part2(bits);
+        part1(packetStr);
+        part2(packetStr);
     }
 
-    private static String computeBits(String hex) {
-        return hex.chars()
-                .mapToObj(c -> HEX_TO_BINARY.get((char) c))
-                .collect(Collectors.joining());
-    }
-
-    private static void part1(String bits) {
-        var packetReader = new PacketReader(bits);
+    private static void part1(String packetStr) {
+        var packetReader = new PacketReader(packetStr);
         packetReader.read();
         var versionSum2 = packetReader.getPackets().stream()
                 .mapToInt(Packet::version)
@@ -55,8 +49,8 @@ public class Day16 {
         System.out.println("Sum of versions = " + versionSum2);
     }
 
-    private static void part2(String bits) {
-        var packetReader = new PacketReader(bits);
+    private static void part2(String packetStr) {
+        var packetReader = new PacketReader(packetStr);
         Packet p = packetReader.read();
         System.out.println("Value = " + p.value());
     }
