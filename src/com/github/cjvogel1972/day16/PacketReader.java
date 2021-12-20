@@ -63,10 +63,10 @@ public class PacketReader {
     private Packet parsePacket() {
         Packet result;
 
-        String versionBits = bits.substring(readLoc, readLoc + 3);
+        var versionBits = bits.substring(readLoc, readLoc + 3);
         readLoc += 3;
-        int version = getIntegerValue(versionBits);
-        String typeBits = bits.substring(readLoc, readLoc + 3);
+        var version = getIntegerValue(versionBits);
+        var typeBits = bits.substring(readLoc, readLoc + 3);
         readLoc += 3;
         int type = getIntegerValue(typeBits);
         if (type == 4) {
@@ -80,11 +80,11 @@ public class PacketReader {
     }
 
     private Packet parseLiteralValue(int version, int type) {
-        boolean done = false;
+        var done = false;
 
         var sb = new StringBuilder();
         while (!done) {
-            String literalBits = bits.substring(readLoc, readLoc + 5);
+            var literalBits = bits.substring(readLoc, readLoc + 5);
             sb.append(literalBits.substring(1, 5));
             readLoc += 5;
             if (literalBits.charAt(0) == '0') {
@@ -92,27 +92,27 @@ public class PacketReader {
             }
         }
 
-        long value = getLongValue(sb.toString());
+        var value = getLongValue(sb.toString());
         return new LiteralPacket(version, type, value);
     }
 
     private Packet parseOperatorValue(int version, int type) {
-        char lenghtTypeId = bits.charAt(readLoc);
+        var lenghtTypeId = bits.charAt(readLoc);
         readLoc++;
 
         var result = new OperatorPacket(version, type);
         if (lenghtTypeId == '0') {
-            String totalLengthOfBitsStr = bits.substring(readLoc, readLoc + 15);
+            var totalLengthOfBitsStr = bits.substring(readLoc, readLoc + 15);
             readLoc += 15;
-            int totalLengthOfBits = getIntegerValue(totalLengthOfBitsStr);
-            int endOfSubPackets = readLoc + totalLengthOfBits;
+            var totalLengthOfBits = getIntegerValue(totalLengthOfBitsStr);
+            var endOfSubPackets = readLoc + totalLengthOfBits;
             while (readLoc < endOfSubPackets) {
                 result.addSubPacket(parsePacket());
             }
         } else {
-            String numberOfSubPackaetsStr = bits.substring(readLoc, readLoc + 11);
+            var numberOfSubPackaetsStr = bits.substring(readLoc, readLoc + 11);
             readLoc += 11;
-            int numberOfSubPackaets = getIntegerValue(numberOfSubPackaetsStr);
+            var numberOfSubPackaets = getIntegerValue(numberOfSubPackaetsStr);
             var packetsProcessed = 0;
             while (packetsProcessed < numberOfSubPackaets) {
                 result.addSubPacket(parsePacket());
