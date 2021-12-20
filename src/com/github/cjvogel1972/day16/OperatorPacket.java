@@ -20,7 +20,7 @@ public class OperatorPacket implements Packet {
 
     @Override
     public long value() {
-        long result = 0;
+        var result = 0L;
 
         if (type == 0) {
             result = subPackets.stream().mapToLong(Packet::value).sum();
