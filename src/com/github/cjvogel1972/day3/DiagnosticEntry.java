@@ -1,5 +1,7 @@
 package com.github.cjvogel1972.day3;
 
+import static com.github.cjvogel1972.util.Utilities.binaryToInt;
+
 public record DiagnosticEntry(String binaryValue) {
 
     public int getNumberOfBits() {
@@ -11,7 +13,7 @@ public record DiagnosticEntry(String binaryValue) {
     }
 
     public int getIntegerValue() {
-        return Integer.parseInt(binaryValue, 2);
+        return binaryToInt(binaryValue);
     }
 
     @Override

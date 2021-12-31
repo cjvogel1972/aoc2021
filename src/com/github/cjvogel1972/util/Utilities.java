@@ -33,4 +33,8 @@ public class Utilities {
     public static int charToInt(char aChar) {
         return Integer.parseInt(String.valueOf(aChar));
     }
+
+    public static int binaryToInt(String binaryValue) {
+        return Integer.parseInt(binaryValue, 2);
+    }
 }
